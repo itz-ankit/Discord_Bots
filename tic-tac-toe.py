@@ -38,16 +38,16 @@ async def play(ctx, position: int):
         await ctx.send("Invalid move! Please choose a number between 1 and 9.")
         return
 
-    if is_board_full():
-        await ctx.send("It's a draw!")
-        reset_board()
-        return
-
     make_move(position, current_player)
 
     if check_winner(current_player):
         await display_board(ctx)
         await ctx.send(f"Player {current_player} wins!")
+        reset_board()
+        return
+
+    if is_board_full():
+        await ctx.send("It's a draw!")
         reset_board()
         return
 
@@ -58,7 +58,10 @@ def is_valid_move(position):
     return position in range(1, 10) and board[position - 1] == EMPTY
 
 def is_board_full():
-    return all(cell != EMPTY for cell in board)
+    if all(cell != EMPTY for cell in board):
+        reset_board()
+        return True
+    return False
 
 def make_move(position, player):
     board[position - 1] = player
