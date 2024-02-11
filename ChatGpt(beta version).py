@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import openai
 
-openai.api_key = "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"  # Replace with your OpenAI API key
+openai.api_key = ""  # Replace with your OpenAI API key
 
 intents = discord.Intents.all()
 intents.messages = True  # Enable listening to message events
